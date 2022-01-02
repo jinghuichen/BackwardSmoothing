@@ -209,10 +209,7 @@ def main():
         nat_acc, robust_acc = eval_adv(model, device, test_loader, steps=20,
                                        step_size=0.0078, loss_type='ce', batch_num=20)
         logger.info('CE   : %d \t %.4f \t  \t %.4f ', epoch, nat_acc, robust_acc)
-        nat_acc, robust_cw = eval_adv(
-            model, device, test_loader, steps=20, step_size=0.0078, loss_type='cw', batch_num=20)
-        logger.info('CW   : %d \t %.4f \t  \t %.4f ', epoch, nat_acc, robust_cw)
-
+         
         # update best
         if robust_acc > best:
             best = robust_acc
@@ -233,13 +230,8 @@ def main():
         out_dir_name, 'model-best.pt')))
     nat_acc, robust_pgd = eval_adv(
         model, device, test_loader, steps=100, step_size=0.0078, loss_type='ce')
-    nat_acc, robust_cw = eval_adv(
-        model, device, test_loader, steps=100, step_size=0.0078, loss_type='cw')
     logger.info('CE-100: %d \t %.4f \t  \t %.4f ',
                 best_epoch, nat_acc, robust_pgd)
-    logger.info('CW-100: %d \t %.4f \t  \t %.4f ',
-                best_epoch, nat_acc, robust_cw)
-
 
 if __name__ == '__main__':
     main()
